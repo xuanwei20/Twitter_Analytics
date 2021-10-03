@@ -1,16 +1,36 @@
-# This is a sample Python script.
+import csv
+import numpy as np
+import matplotlib.pyplot as plt
 
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+disaster_words = []
+relevant_words = []
+decisions = []
 
+with open('main.csv', 'r') as dataset:
+    lines = csv.reader(dataset)
+    headings = next(lines)
+    for row in lines:
+        disaster_words.append(int(row[2]))
+        relevant_words.append(int(row[3]))
+        decisions.append(int(row[4]))
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Strg+F8 to toggle the breakpoint.
+print(disaster_words)
+print(relevant_words)
+print(decisions)
 
+plt.scatter(disaster_words, decisions, marker='*', color='blue')
+plt.xlabel('disaster word number')
+plt.ylabel('disaster')
+plt.title('logistic regression', fontsize = 15)
+plt.show()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+plt.scatter(relevant_words, decisions, marker='*', color='purple')
+plt.xlabel('relevant word number')
+plt.ylabel('disaster')
+plt.title('logistic regression', fontsize = 15)
+plt.show()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+id_variable = np.column_stack((disaster_words, relevant_words))
+print(id_variable)
+dv_variable = np.array(decisions).reshape(len(decisions),1)
+print(dv_variable)
